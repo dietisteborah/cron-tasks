@@ -199,7 +199,11 @@
 						}
 					}
 				}
-				else if(strtotime($endOpen) > strtotime($previousEndTime)){
+				else{
+					//Do nothing, no time left
+				}
+				$previousEndTime = substr($event->getEnd()->dateTime,11,5);
+				if(strtotime($endOpen) > strtotime($previousEndTime)){
 					printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
 					$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
 					if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
@@ -220,10 +224,6 @@
 						}
 					}					
 				}
-				else{
-					//Do nothing, no time left
-				}
-				$previousEndTime = substr($event->getEnd()->dateTime,11,5);
 			}
 		}
 		/*
