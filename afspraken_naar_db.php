@@ -204,7 +204,7 @@
 				$start = substr($startDateTime, 11, 5);						
 				if(strtotime($start) > strtotime($previousEndTime)){
 					$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
-					if(($timeDifferenceInMinutes/90) >= 1)){ //afspraak van 90 min
+					if(($timeDifferenceInMinutes/90) >= 1){ //afspraak van 90 min
 						$noTime = false;
 						$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
 						for($i=0;$i<($amountOfAppointments-2);$i++){
@@ -224,7 +224,7 @@
 		$endOpen=substr($endOpen, 11, 5);
 		if(strtotime($endOpen) > strtotime($previousEndTime)){
 			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
-			if(($timeDifferenceInMinutes/90) >= 1)){ //afspraak van 90 min
+			if(($timeDifferenceInMinutes/90) >= 1){ //afspraak van 90 min
 				$noTime = false;
 				$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
 				for($i=0;$i<($amountOfAppointments-2);$i++){
