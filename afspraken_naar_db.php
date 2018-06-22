@@ -188,14 +188,14 @@
 	$client = getClient();
 	$service = new Google_Service_Calendar($client);
 
-	//today - end of day
+	//today
 	$today = DateTime::createFromFormat('j-M-Y', time());
 	
 	//Query the events for the next month
 	$optParams = array(
 	  'orderBy' => 'startTime',
 	  'singleEvents' => true,
-	  'timeMax' => $date->format('Y-m-d').'T23:00:00',
+	  'timeMax' => $today->format('Y-m-d').'T23:00:00',
 	  'timeMin' => date('Y-m-d', strtotime('+2 months')).'T23:00:00',
 	);
 	$results = $service->events->listEvents($calendarId, $optParams);	
