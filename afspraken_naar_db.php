@@ -155,7 +155,7 @@
 		}
 	}
 
-	function createOpvolg($results,$previousEndTime){
+	function createOpvolg($results,$previousEndTime,$endOpen){
 		foreach ($results->getItems() as $event) {
 			if(!($event->getSummary() == "Open")){
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
@@ -241,30 +241,30 @@
 	if (empty($results->getItems())) {
 		print "No upcoming events found.\n";
 	} else {
-				foreach ($results->getItems() as $event) {
-					if($event->getSummary() == "Open"){
-						print "open: ";
-						$open=true;
-						$startOpen = $event->start->dateTime;
-						$endOpen = $event->getEnd()->dateTime;
+		foreach ($results->getItems() as $event) {
+			if($event->getSummary() == "Open"){
+				print "open: ";
+				$open=true;
+				$startOpen = $event->start->dateTime;
+				$endOpen = $event->getEnd()->dateTime;
 
-						//Query the events during the opening times
-						$optParams = array(
-						  'orderBy' => 'startTime',
-						  'singleEvents' => true,
-						  'timeMax' => $endOpen,
-						  'timeMin' => $startOpen,
-						);
-						$results = $service->events->listEvents($calendarId, $optParams);
-						
-						$startOpen=substr($startOpen, 11, 5);
-						$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
-						createOpvolg($results,$previousEndTime);
-					}
-					else{
-						print "Geen afspraak met titel open.\n";
-					}
-				}
+				//Query the events during the opening times
+				$optParams = array(
+				  'orderBy' => 'startTime',
+				  'singleEvents' => true,
+				  'timeMax' => $endOpen,
+				  'timeMin' => $startOpen,
+				);
+				$results = $service->events->listEvents($calendarId, $optParams);
+				
+				$startOpen=substr($startOpen, 11, 5);
+				$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
+				createOpvolg($results,$previousEndTime,$endOpen);
+			}
+			else{
+				print "Geen afspraak met titel open.\n";
+			}
+		}
 
     }
 	
