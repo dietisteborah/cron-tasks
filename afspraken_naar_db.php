@@ -237,7 +237,7 @@
 	}
 	function connectToDB(){
 		$string = file_get_contents("pw.txt");
-		$string = str_replace(array("\r", "\n"), '', $string)
+		$string = str_replace(array("\r", "\n"), '', $string);
 		$link = mysqli_connect("localhost", "borahv1q", $string , "borahv1q_Agenda");
 		if (!$link) {
 			echo "Error: Unable to connect to MySQL." . PHP_EOL;
