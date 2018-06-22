@@ -189,7 +189,9 @@
 	$service = new Google_Service_Calendar($client);
 
 	//today
-	$today = DateTime::createFromFormat('j-M-Y', time());
+	//$today = DateTime::createFromFormat('j-M-Y', time());
+	$today = new DateTime(); // This object represents current date/time
+	$today->setTime( 0, 0, 0 ); // reset time part, to prevent partial comparison	
 	
 	//Query the events for the next month
 	$optParams = array(
