@@ -294,6 +294,5 @@
 					print "Geen tijdstippen vrij op deze datum.\n";
 				}
     }
-}
 	
 ?>
