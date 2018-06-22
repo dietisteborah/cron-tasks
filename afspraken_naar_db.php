@@ -176,7 +176,7 @@
 				$startDateTime = $event->start->dateTime;
 				$start = substr($startDateTime, 11, 5);		
 				$app_date = substr($startDateTime, 0, 10);
-				printf "SD: ".$app_date." ST: ".$start;
+				printf("SD: %s; ST: %s;", $app_date,$start);
 				if(strtotime($start) > strtotime($previousEndTime)){
 					$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
 					if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
@@ -206,7 +206,7 @@
 		//do the check for the last appointment & closing time
 		$endOpen=substr($endOpen, 11, 5);
 		$app_date = substr($endOpen, 0, 10);
-		printf "ED: ".$app_date." ET: ".$endOpen;
+		printf("ED: %s; ET: %s;", $app_date,$endOpen);
 		if(strtotime($endOpen) > strtotime($previousEndTime)){
 			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
 			if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
