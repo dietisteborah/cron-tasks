@@ -195,7 +195,7 @@
 	$today->setTime( 0, 0, 0 ); // reset time part, to prevent partial comparison	
 	
 	print "today: ".$today->format('Y-m-d').'T23:00:00';
-	print "3months: ".$date('Y-m-d', strtotime('+2 months')).'T23:00:00'
+	print "3months: ".date('Y-m-d', strtotime('+2 months')).'T23:00:00';
 	//Query the events for the next month
 	$optParams = array(
 	  'orderBy' => 'startTime',
