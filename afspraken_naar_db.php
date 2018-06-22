@@ -166,9 +166,9 @@
 			echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
 			exit;
 		}
-		echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
-		echo "Host information: " . mysqli_get_host_info($link) . PHP_EOL;
-		
+		echo "Connect to mysql.\n" . PHP_EOL;
+
+		$app_date_end = "";
 		foreach ($results->getItems() as $event) {
 			if(!($event->getSummary() == "Open")){
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
@@ -176,6 +176,7 @@
 				$startDateTime = $event->start->dateTime;
 				$start = substr($startDateTime, 11, 5);		
 				$app_date = substr($startDateTime, 0, 10);
+				$app_date_end = substr($startDateTime, 0, 10);
 				printf("SD: %s; ST: %s;", $app_date,$start);
 				if(strtotime($start) > strtotime($previousEndTime)){
 					$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
@@ -186,7 +187,7 @@
 							$add = 30 + (30*$i);
 							$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
 							$db_endTime = $newStartTime + (30*60);
-							printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+							//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 									$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
 									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
 									if (mysqli_query($link, $sql)) {
@@ -205,7 +206,7 @@
 		}
 		//do the check for the last appointment & closing time
 		$endOpen=substr($endOpen, 11, 5);
-		$app_date = substr($endOpen, 0, 10);
+		$app_date_end = substr($endOpen, 0, 10);
 		printf("ED: %s; ET: %s;", $app_date,$endOpen);
 		if(strtotime($endOpen) > strtotime($previousEndTime)){
 			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
@@ -215,7 +216,7 @@
 				for($i=0;$i<$amountOfAppointments;$i++){
 					$add = 30 + (30*$i);
 					$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-					printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+					//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 					$db_endTime = $newStartTime + (30*60);
 					$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
 					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
