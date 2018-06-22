@@ -184,9 +184,10 @@
 						for($i=0;$i<$amountOfAppointments;$i++){
 							$add = 30 + (30*$i);
 							$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
+							$db_endTime = $newStartTime + (30*60);
 							printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 									$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".$newStartTime + (30*60).":00')";
+									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".$db_endTime.":00')";
 									if (mysqli_query($link, $sql)) {
 										echo "New record created successfully";
 									} else {
@@ -212,8 +213,9 @@
 					$add = 30 + (30*$i);
 					$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
 					printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+					$db_endTime = $newStartTime + (30*60);
 					$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".$newStartTime + (30*60).":00')";
+					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".$db_endTime.":00')";
 					if (mysqli_query($link, $sql)) {
 						echo "New record created successfully";
 					} else {
@@ -222,6 +224,7 @@
 				}
 			}
 		}	
+		mysqli_close($link);
 	}
 	function createEerste($results,$previousEndTime,$endOpen){
 		foreach ($results->getItems() as $event) {
