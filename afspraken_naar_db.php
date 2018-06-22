@@ -187,7 +187,7 @@
 							$db_endTime = $newStartTime + (30*60);
 							printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 									$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".$db_endTime.":00')";
+									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
 									if (mysqli_query($link, $sql)) {
 										echo "New record created successfully";
 									} else {
@@ -216,7 +216,7 @@
 					printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 					$db_endTime = $newStartTime + (30*60);
 					$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".$db_endTime.":00')";
+					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
 					if (mysqli_query($link, $sql)) {
 						echo "New record created successfully";
 					} else {
