@@ -207,7 +207,7 @@
 		//do the check for the last appointment & closing time
 		$endOpen=substr($endOpen, 11, 5);
 		$app_date_end = substr($endOpen, 0, 10);
-		printf("ED: %s; ET: %s;", $app_date,$endOpen);
+		printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
 		if(strtotime($endOpen) > strtotime($previousEndTime)){
 			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
 			if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
@@ -219,7 +219,7 @@
 					//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 					$db_endTime = $newStartTime + (30*60);
 					$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
+					VALUES (1,'".$app_date_end."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
 					if (mysqli_query($link, $sql)) {
 						echo "_OK_";
 					} else {
