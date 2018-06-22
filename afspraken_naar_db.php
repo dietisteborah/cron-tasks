@@ -200,8 +200,8 @@
 	$optParams = array(
 	  'orderBy' => 'startTime',
 	  'singleEvents' => true,
-	  'timeMax' => $today->format('Y-m-d').'T23:00:00',
-	  'timeMin' => date('Y-m-d', strtotime('+2 months')).'T23:00:00',
+	  'timeMax' => $today->format('Y-m-d').'T23:00:00Z',
+	  'timeMin' => date('Y-m-d', strtotime('+2 months')).'T23:00:00Z',
 	);
 	$results = $service->events->listEvents($calendarId, $optParams);	
 	
