@@ -206,7 +206,7 @@
 				$open=true;
 			}
 		}
-		if(open){
+		if($open){
 			//do the check for the last appointment & closing time
 			$endOpen=substr($endOpen, 11, 5);
 			printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
