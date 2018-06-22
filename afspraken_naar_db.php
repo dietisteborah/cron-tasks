@@ -216,83 +216,82 @@
 						$open=true;
 						$startOpen = $event->start->dateTime;
 						$endOpen = $event->getEnd()->dateTime;
-						break;
-					}
-				}
-				if($open){
-					//Query the events during the opening times
-					$optParams = array(
-					  'orderBy' => 'startTime',
-					  'singleEvents' => true,
-					  'timeMax' => $endOpen,
-					  'timeMin' => $startOpen,
-					);
-					$results = $service->events->listEvents($calendarId, $optParams);
-					
-					$startOpen=substr($startOpen, 11, 5);
-					$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
-					//$opvolg=false;
-					foreach ($results->getItems() as $event) {
-						if(!($event->getSummary() == "Open")){
-							//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
-							//Op basis daarvan vrije momenten toevoegen aan de lijst met vrije uren (aantal minuten delen door 30 of 90)
-							$startDateTime = $event->start->dateTime;
-							$start = substr($startDateTime, 11, 5);						
-							if(strtotime($start) > strtotime($previousEndTime)){
-								$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
-								if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
-									$noTime = false;
-									$amountOfAppointments = $timeDifferenceInMinutes/30;
-									for($i=0;$i<$amountOfAppointments;$i++){
-										$add = 30 + (30*$i);
-										$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-										printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+
+						//Query the events during the opening times
+						$optParams = array(
+						  'orderBy' => 'startTime',
+						  'singleEvents' => true,
+						  'timeMax' => $endOpen,
+						  'timeMin' => $startOpen,
+						);
+						$results = $service->events->listEvents($calendarId, $optParams);
+						
+						$startOpen=substr($startOpen, 11, 5);
+						$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
+						//$opvolg=false;
+						foreach ($results->getItems() as $event) {
+							if(!($event->getSummary() == "Open")){
+								//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
+								//Op basis daarvan vrije momenten toevoegen aan de lijst met vrije uren (aantal minuten delen door 30 of 90)
+								$startDateTime = $event->start->dateTime;
+								$start = substr($startDateTime, 11, 5);						
+								if(strtotime($start) > strtotime($previousEndTime)){
+									$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
+									if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
+										$noTime = false;
+										$amountOfAppointments = $timeDifferenceInMinutes/30;
+										for($i=0;$i<$amountOfAppointments;$i++){
+											$add = 30 + (30*$i);
+											$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
+											printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+										}
 									}
+									/*elseif(($timeDifferenceInMinutes/90) >= 1)){ //afspraak van 90 min
+										$noTime = false;
+										$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
+										for($i=0;$i<($amountOfAppointments-2);$i++){
+											$add = 30 + (30*$i);
+											$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
+											printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+										}
+									}*/
 								}
-								/*elseif(($timeDifferenceInMinutes/90) >= 1)){ //afspraak van 90 min
-									$noTime = false;
-									$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
-									for($i=0;$i<($amountOfAppointments-2);$i++){
-										$add = 30 + (30*$i);
-										$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-										printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
-									}
-								}*/
+								else{
+									//Do nothing, no time left
+								}
+								$previousEndTime = substr($event->getEnd()->dateTime,11,5);
 							}
-							else{
-								//Do nothing, no time left
-							}
-							$previousEndTime = substr($event->getEnd()->dateTime,11,5);
 						}
+						//do the check for the last appointment & closing time
+						$endOpen=substr($endOpen, 11, 5);
+						if(strtotime($endOpen) > strtotime($previousEndTime)){
+							$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
+							if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
+								$noTime = false;
+								$amountOfAppointments = $timeDifferenceInMinutes/30;
+								for($i=0;$i<$amountOfAppointments;$i++){
+									$add = 30 + (30*$i);
+									$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
+									printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+								}
+							}
+							/*
+							elseif(($timeDifferenceInMinutes/90) >= 1)){ //afspraak van 90 min
+								$noTime = false;
+								$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
+								for($i=0;$i<($amountOfAppointments-2);$i++){
+									$add = 30 + (30*$i);
+									$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
+									printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
+								}
+							} */
+						}				
 					}
-					//do the check for the last appointment & closing time
-					$endOpen=substr($endOpen, 11, 5);
-					if(strtotime($endOpen) > strtotime($previousEndTime)){
-						$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
-						if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
-							$noTime = false;
-							$amountOfAppointments = $timeDifferenceInMinutes/30;
-							for($i=0;$i<$amountOfAppointments;$i++){
-								$add = 30 + (30*$i);
-								$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-								printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
-							}
-						}
-						/*
-						elseif(($timeDifferenceInMinutes/90) >= 1)){ //afspraak van 90 min
-							$noTime = false;
-							$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
-							for($i=0;$i<($amountOfAppointments-2);$i++){
-								$add = 30 + (30*$i);
-								$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-								printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
-							}
-						} */
-					}		
+					else{
+						print "Geen tijdstippen vrij op deze datum.\n";
+					}
 				}
-				else{
-					print "Geen tijdstippen vrij op deze datum.\n";
-				}
+
     }
 	
 ?>
