@@ -189,7 +189,7 @@
 									$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
 									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
 									if (mysqli_query($link, $sql)) {
-										echo "New record created successfully";
+										echo "_OK_";
 									} else {
 										echo "Error: " . $sql . "<br>" . mysqli_error($link);
 									}
@@ -218,7 +218,7 @@
 					$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
 					VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
 					if (mysqli_query($link, $sql)) {
-						echo "New record created successfully";
+						echo "_OK_";
 					} else {
 						echo "Error: " . $sql . "<br>" . mysqli_error($link);
 					}
@@ -333,12 +333,12 @@
 				  'timeMax' => $endOpen,
 				  'timeMin' => $startOpen,
 				);
-				$results = $service->events->listEvents($calendarId, $optParams);
+				$resultsOpen = $service->events->listEvents($calendarId, $optParams);
 				
 				$startOpen=substr($startOpen, 11, 5);
 				$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
-				createOpvolg($results,$previousEndTime,$endOpen);
-				//createEerste($results,$previousEndTime,$endOpen);
+				createOpvolg($resultsOpen,$previousEndTime,$endOpen);
+				//createEerste($resultsOpen,$previousEndTime,$endOpen);
 			}
 			else{
 				print "\nGeen afspraak met titel open.\n";
