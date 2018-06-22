@@ -187,7 +187,7 @@
 	// Get the API client and construct the service object.
 	$client = getClient();
 	$service = new Google_Service_Calendar($client);
-
+	$calendarId = 'dietiste.borah@gmail.com';
 	//today
 	//$today = DateTime::createFromFormat('j-M-Y', time());
 	$today = new DateTime(); // This object represents current date/time
