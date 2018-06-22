@@ -204,6 +204,7 @@
 		}
 		//do the check for the last appointment & closing time
 		$endOpen=substr($endOpen, 11, 5);
+		$app_date = substr($endOpen, 0, 10);
 		if(strtotime($endOpen) > strtotime($previousEndTime)){
 			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
 			if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
