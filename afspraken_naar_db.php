@@ -206,7 +206,6 @@
 		}
 		//do the check for the last appointment & closing time
 		$endOpen=substr($endOpen, 11, 5);
-		$app_date_end = substr($endOpen, 0, 10);
 		printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
 		if(strtotime($endOpen) > strtotime($previousEndTime)){
 			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
