@@ -321,7 +321,6 @@
 	} else {
 		foreach ($results->getItems() as $event) {
 			if($event->getSummary() == "Open"){
-				print "open: \n";
 				$open=true;
 				$startOpen = $event->start->dateTime;
 				$endOpen = $event->getEnd()->dateTime;
@@ -336,6 +335,7 @@
 				$resultsOpen = $service->events->listEvents($calendarId, $optParams);
 				
 				$startOpen=substr($startOpen, 11, 5);
+				print "open: ".$startOpen."\n";
 				$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
 				createOpvolg($resultsOpen,$previousEndTime,$endOpen);
 				//createEerste($resultsOpen,$previousEndTime,$endOpen);
