@@ -248,7 +248,25 @@
 
 		echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
 		echo "Host information: " . mysqli_get_host_info($link) . PHP_EOL;
+			
+		/* return name of current default database */
+		if ($result = mysqli_query($link, "SELECT DATABASE()")) {
+			$row = mysqli_fetch_row($result);
+			printf("Default database is %s.\n", $row[0]);
+			mysqli_free_result($result);
+		}
 
+		/* change db to world db */
+		mysqli_select_db($link, "borahv1q_Agenda");
+
+		/* return name of current default database */
+		if ($result = mysqli_query($link, "SELECT DATABASE()")) {
+			$row = mysqli_fetch_row($result);
+			printf("Default database is %s.\n", $row[0]);
+			mysqli_free_result($result);
+		}
+
+		
 		mysqli_close($link);
 	}
 	// Get the API client and construct the service object.
