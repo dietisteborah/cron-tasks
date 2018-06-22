@@ -168,8 +168,8 @@
 		}
 		echo "Connect to mysql.\n" . PHP_EOL;
 
-		$endOpen=substr($endOpen, 11, 5);
-
+		$app_date_end = "";
+		$lastEvent;
 		foreach ($results->getItems() as $event) {
 			if(!($event->getSummary() == "Open")){
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
@@ -203,27 +203,7 @@
 					//Do nothing, no time left
 				}
 				$previousEndTime = substr($event->getEnd()->dateTime,11,5);
-				if(strtotime($endOpen) > strtotime($previousEndTime)){
-					printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
-					$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
-					if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
-						$noTime = false;
-						$amountOfAppointments = $timeDifferenceInMinutes/30;
-						for($i=0;$i<$amountOfAppointments;$i++){
-							$add = 30 + (30*$i);
-							$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-							//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
-							$db_endTime = $newStartTime + (30*60);
-							$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-							VALUES (1,'".$app_date_end."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
-							if (mysqli_query($link, $sql)) {
-								echo "_OK_";
-							} else {
-								echo "Error: " . $sql . "<br>" . mysqli_error($link);
-							}
-						}
-					}					
-				}
+				$lastEvent = $event;
 			}
 		}
 		/*
