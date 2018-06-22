@@ -248,22 +248,14 @@
 
 		echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
 		echo "Host information: " . mysqli_get_host_info($link) . PHP_EOL;
-			
-		/* return name of current default database */
-		if ($result = mysqli_query($link, "SELECT DATABASE()")) {
-			$row = mysqli_fetch_row($result);
-			printf("Default database is %s.\n", $row[0]);
-			mysqli_free_result($result);
-		}
 
-		/* change db to world db */
-		mysqli_select_db($link, "borahv1q_Agenda");
+		$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
+		VALUES (1, '2018-06-25','10:00:00','10:30:00')";
 
-		/* return name of current default database */
-		if ($result = mysqli_query($link, "SELECT DATABASE()")) {
-			$row = mysqli_fetch_row($result);
-			printf("Default database is %s.\n", $row[0]);
-			mysqli_free_result($result);
+		if (mysqli_query($link, $sql)) {
+			echo "New record created successfully";
+		} else {
+			echo "Error: " . $sql . "<br>" . mysqli_error($link);
 		}
 
 		
