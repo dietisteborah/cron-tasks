@@ -170,7 +170,9 @@
 
 		$app_date_end = "";
 		$open=false;
+		$appointmentsInList = 0;
 		foreach ($results->getItems() as $event) {
+			$appointmentsInList = $appointmentsInList +1;
 			if(!($event->getSummary() == "Open")){
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
 				//Op basis daarvan vrije momenten toevoegen aan de lijst met vrije uren (aantal minuten delen door 30 of 90)
@@ -206,7 +208,7 @@
 				$open=true;
 			}
 		}
-		if($open){
+		if($open || $appointmentsInList ==1){
 			//do the check for the last appointment & closing time
 			$endOpen=substr($endOpen, 11, 5);
 			printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
