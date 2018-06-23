@@ -256,19 +256,19 @@
 				$start = substr($startDateTime, 11, 5);		
 				$app_date = substr($startDateTime, 0, 10);
 				$app_date_end = substr($startDateTime, 0, 10);
-				printf("SD: %s; ST: %s;", $app_date,$start);
+				printf("SDL: %s; STL: %s;", $app_date,$start);
 				if(strtotime($start) > strtotime($previousEndTime)){
 					$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
-					if(($timeDifferenceInMinutes/90) >= 1){ //afspraak 90 min
+					if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 90 min
 						$noTime = false;
-						$amountOfAppointments = $timeDifferenceInMinutes/30;
-						for($i=0;$i<$amountOfAppointments-2;$i++){
+						$amountOfAppointments = $timeDifferenceInMinutes/30; //afspraak kan elke 30min geplaatst worden
+						for($i=0;$i<$amountOfAppointments-2;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
 							$add = 30 + (30*$i);
 							$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
 							$db_endTime = $newStartTime + (30*60);
 							//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 									$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-									VALUES (1,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
+									VALUES (0,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')"; //opvolg = 0 want geen opvolg afspr
 									if (mysqli_query($link, $sql)) {
 										echo "_OK_";
 									} else {
@@ -287,19 +287,18 @@
 		if($open){
 			//do the check for the last appointment & closing time
 			$endOpen=substr($endOpen, 11, 5);
-			printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
+			printf("EDL: %s; ETL: %s;", $app_date_end,$endOpen);
 			if(strtotime($endOpen) > strtotime($previousEndTime)){
 				$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
-				if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
+				if(($timeDifferenceInMinutes/90) >= 1){ //afspraak 90 min
 					$noTime = false;
-					$amountOfAppointments = $timeDifferenceInMinutes/90;
-					for($i=0;$i<$amountOfAppointments-2;$i++){
+					$amountOfAppointments = $timeDifferenceInMinutes/30; //afspraak kan elke 30min geplaatst worden
+					for($i=0;$i<$amountOfAppointments-2;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
 						$add = 30 + (30*$i);
 						$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-						//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 						$db_endTime = $newStartTime + (30*60);
 						$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-						VALUES (1,'".$app_date_end."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')";
+						VALUES (0,'".$app_date_end."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')"; //opvolg = 0 want geen opvolg afspr
 						if (mysqli_query($link, $sql)) {
 							echo "_OK_";
 						} else {
@@ -311,20 +310,6 @@
 		}
 		mysqli_close($link);
 	}
-		//do the check for the last appointment & closing time
-		$endOpen=substr($endOpen, 11, 5);
-		if(strtotime($endOpen) > strtotime($previousEndTime)){
-			$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
-			if(($timeDifferenceInMinutes/90) >= 1){ //afspraak van 90 min
-				$noTime = false;
-				$amountOfAppointments = $timeDifferenceInMinutes/30; //elke 30 min een afspraak
-				for($i=0;$i<($amountOfAppointments-2);$i++){
-					$add = 30 + (30*$i);
-					$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-					printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
-				}
-			} 
-		}	
 	}
 	function connectToDB(){
 		$string = file_get_contents("pw.txt");
@@ -396,8 +381,8 @@
 				$startOpen=substr($startOpen, 11, 5);
 				print "open: ".$startOpen."\n";
 				$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
-				createOpvolg($resultsOpen,$previousEndTime,$endOpen);
-				//createEerste($resultsOpen,$previousEndTime,$endOpen);
+				//createOpvolg($resultsOpen,$previousEndTime,$endOpen);
+				createEerste($resultsOpen,$previousEndTime,$endOpen);
 			}
 			else{
 				print "\nGeen afspraak met titel open.\n";
