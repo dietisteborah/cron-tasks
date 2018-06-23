@@ -252,14 +252,16 @@
 
 		$app_date_end = "";
 		$open=false;
+		$appointmentsInList = 0;
 		foreach ($results->getItems() as $event) {
+			$appointmentsInList = $appointmentsInList +1;
+			$startDateTime = $event->start->dateTime; //needed if there is only 1 appointment
+			$app_date_end = substr($startDateTime, 0, 10); //needed if there is only 1 appointment
 			if(!($event->getSummary() == "Open")){
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
 				//Op basis daarvan vrije momenten toevoegen aan de lijst met vrije uren (aantal minuten delen door 30 of 90)
-				$startDateTime = $event->start->dateTime;
 				$start = substr($startDateTime, 11, 5);		
 				$app_date = substr($startDateTime, 0, 10);
-				$app_date_end = substr($startDateTime, 0, 10);
 				printf("SDL: %s; STL: %s;", $app_date,$start);
 				if(strtotime($start) > strtotime($previousEndTime)){
 					$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
@@ -288,7 +290,7 @@
 				$open=true;
 			}
 		}
-		if($open){
+		if($open || $appointmentsInList ==1){
 			//do the check for the last appointment & closing time
 			$endOpen=substr($endOpen, 11, 5);
 			printf("EDL: %s; ETL: %s;", $app_date_end,$endOpen);
