@@ -265,7 +265,7 @@
 						for($i=0;$i<$amountOfAppointments-2;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
 							$add = 30 + (30*$i);
 							$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-							$db_endTime = $newStartTime + (30*60);
+							$db_endTime = $newStartTime + (90*60);
 							//printf("%s;", date("H:i",$newStartTime)); //TODO -> insert naar DB
 									$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
 									VALUES (0,'".$app_date."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')"; //opvolg = 0 want geen opvolg afspr
@@ -296,7 +296,7 @@
 					for($i=0;$i<$amountOfAppointments-2;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
 						$add = 30 + (30*$i);
 						$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
-						$db_endTime = $newStartTime + (30*60);
+						$db_endTime = $newStartTime + (90*60);
 						$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
 						VALUES (0,'".$app_date_end."','".date("H:i",$newStartTime).":00','".date("H:i",$db_endTime).":00')"; //opvolg = 0 want geen opvolg afspr
 						if (mysqli_query($link, $sql)) {
@@ -380,7 +380,7 @@
 				$startOpen=substr($startOpen, 11, 5);
 				print "open: ".$startOpen."\n";
 				$previousEndTime = $startOpen; //First time, difference between Open "openingtime" and first appointment has to be found
-				//createOpvolg($resultsOpen,$previousEndTime,$endOpen);
+				createOpvolg($resultsOpen,$previousEndTime,$endOpen);
 				createEerste($resultsOpen,$previousEndTime,$endOpen);
 			}
 			else{
