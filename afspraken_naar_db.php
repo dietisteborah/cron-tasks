@@ -310,7 +310,6 @@
 		}
 		mysqli_close($link);
 	}
-	}
 	function connectToDB(){
 		$string = file_get_contents("pw.txt");
 		$string = str_replace(array("\r", "\n"), '', $string);
