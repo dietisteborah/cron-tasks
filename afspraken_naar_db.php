@@ -188,32 +188,7 @@
 		}
 		mysqli_close($link);
 	}
-	function connectToDB(){
-		$string = file_get_contents("/home/borahv1q/borah-secrets/pw.txt");
-		$string = str_replace(array("\r", "\n"), '', $string);
-		$link = mysqli_connect("localhost", "borahv1q", $string , "borahv1q_Agenda");
-		if (!$link) {
-			echo "Error: Unable to connect to MySQL." . PHP_EOL;
-			echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-			echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-			exit;
-		}
-
-		echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
-		echo "Host information: " . mysqli_get_host_info($link) . PHP_EOL;
-
-		$sql = "INSERT INTO afspraken (opvolg, date, startTime, endTime)
-		VALUES (1, '2018-06-25','10:00:00','10:30:00')";
-
-		if (mysqli_query($link, $sql)) {
-			echo "New record created successfully";
-		} else {
-			echo "Error: " . $sql . "<br>" . mysqli_error($link);
-		}
-
-		
-		mysqli_close($link);
-	}
+	
 	// Get the API client and construct the service object.
 	$client = getClient();
 	$service = new Google_Service_Calendar($client);
