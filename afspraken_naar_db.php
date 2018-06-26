@@ -223,7 +223,7 @@
 			error_log($errordate."--"."Debugging error: " . mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 			exit;
 		}
-		$sql = "DELETE * FROM afspraken";
+		$sql = "DELETE FROM afspraken";
 		$errordate = date('d.m.Y h:i:s'); 
 		if (mysqli_query($link, $sql)) {
 			error_log($errordate."--"."OK: query".$sql."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
