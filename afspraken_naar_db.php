@@ -209,6 +209,9 @@
 		mysqli_close($link);
 	}
 	
+	$errordate = date('d.m.Y h:i:s'); 
+	error_log($errordate."--"."Starting afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+	
 	// Get the API client and construct the service object.
 	$client = getClient();
 	$service = new Google_Service_Calendar($client);
@@ -263,4 +266,6 @@
 		}
 
     }
+	$errordate = date('d.m.Y h:i:s'); 
+	error_log($errordate."--"."End of afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
 ?>
