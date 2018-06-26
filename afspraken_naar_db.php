@@ -208,7 +208,7 @@
 		}
 		mysqli_close($link);
 	}
-	function createEerste($results,$previousEndTime,$endOpen){
+	function cleanDB(){
 		//Database functionality
 		$string = file_get_contents("/home/borahv1q/borah-secrets/pw.txt");
 		$string = str_replace(array("\r", "\n"), '', $string);
@@ -233,6 +233,7 @@
 
 		mysqli_close($link);
 	}	
+	
 	$errordate = date('d.m.Y h:i:s'); 
 	error_log($errordate."--"."Starting afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 	
