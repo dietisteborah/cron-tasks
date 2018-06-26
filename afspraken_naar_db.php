@@ -243,7 +243,6 @@
 	$calendarId = 'dietiste.borah@gmail.com';
 	
 	//today
-	//$today = DateTime::createFromFormat('j-M-Y', time());
 	$today = new DateTime(); // This object represents current date/time
 	$today->setTime( 0, 0, 0 ); // reset time part, to prevent partial comparison	
 	
@@ -266,6 +265,7 @@
 	} else {
 		//remove all database records
 		cleanDB();
+		//create the new events
 		foreach ($results->getItems() as $event) {
 			if($event->getSummary() == "Open"){
 				$open=true;
