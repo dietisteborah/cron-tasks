@@ -17,7 +17,7 @@
 		} else {
 			printf("Er is een probleem met de kalender. \n Gelieve een mail te sturen naar dietiste.borah@gmail.com");
 			$date = date('d.m.Y h:i:s'); 
-			error_log($date."--"."Probleem met credentialspath.\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+			error_log($date."--"."Probleem met credentialspath.\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 		}
 		$client->setAccessToken($accessToken);
 
@@ -39,14 +39,14 @@
 			echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
 			echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
 			$errordate = date('d.m.Y h:i:s'); 
-			error_log($errordate."--"."createOpvolg - Error: Unable to connect to MySQL." . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
-			error_log($errordate."--"."createOpvolg - Debugging errno: " . mysqli_connect_errno() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
-			error_log($errordate."--"."createOpvolg - Debugging error: " . mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+			error_log($errordate."--"."createOpvolg - Error: Unable to connect to MySQL." . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			error_log($errordate."--"."createOpvolg - Debugging errno: " . mysqli_connect_errno() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			error_log($errordate."--"."createOpvolg - Debugging error: " . mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 			exit;
 		}
 		//echo "Connect to mysql.\n" . PHP_EOL;
 		$errordate = date('d.m.Y h:i:s'); 
-		error_log($errordate."--"."Executing function createOpvolg and connected to DB\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+		error_log($errordate."--"."Executing function createOpvolg and connected to DB\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 
 		$app_date_end = "";
 		$open=false;
@@ -59,7 +59,7 @@
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
 				//Op basis daarvan vrije momenten toevoegen aan de lijst met vrije uren (aantal minuten delen door 30 of 90)
 				$errordate = date('d.m.Y h:i:s'); 
-				error_log($errordate."--"."(createOpvolg - $event->getSummary() == \"Open\")\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");				
+				error_log($errordate."--"."(createOpvolg - $event->getSummary() == \"Open\")\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");				
 				$start = substr($startDateTime, 11, 5);		
 				$app_date = substr($startDateTime, 0, 10);
 				
@@ -95,7 +95,7 @@
 			printf("ED: %s; ET: %s;", $app_date_end,$endOpen);
 			if(strtotime($endOpen) > strtotime($previousEndTime)){
 				$errordate = date('d.m.Y h:i:s'); 
-				error_log($errordate."--"."createOpvolg - strtotime($endOpen) > strtotime($previousEndTime)\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");	
+				error_log($errordate."--"."createOpvolg - strtotime($endOpen) > strtotime($previousEndTime)\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");	
 				$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
 				if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 30 min
 					$noTime = false;
@@ -128,14 +128,14 @@
 			echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
 			echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
 			$errordate = date('d.m.Y h:i:s'); 
-			error_log($errordate."--"."Error: Unable to connect to MySQL." . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
-			error_log($errordate."--"."Debugging errno: " . mysqli_connect_errno() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
-			error_log($errordate."--"."Debugging error: " . mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+			error_log($errordate."--"."Error: Unable to connect to MySQL." . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			error_log($errordate."--"."Debugging errno: " . mysqli_connect_errno() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			error_log($errordate."--"."Debugging error: " . mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 			exit;
 		}
 		//echo "Connect to mysql.\n" . PHP_EOL;
 		$errordate = date('d.m.Y h:i:s'); 
-		error_log($errordate."--"."Executing function createEerste and connected to DB\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+		error_log($errordate."--"."Executing function createEerste and connected to DB\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 
 
 		$app_date_end = "";
@@ -147,7 +147,7 @@
 			$app_date_end = substr($startDateTime, 0, 10); //needed if there is only 1 appointment
 			if(!($event->getSummary() == "Open")){
 				$errordate = date('d.m.Y h:i:s'); 
-				error_log($errordate."--"."(createEerste - $event->getSummary() == \"Open\")\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");	
+				error_log($errordate."--"."(createEerste - $event->getSummary() == \"Open\")\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");	
 				//Check begintijd met eind tijd vorige afspraak. Daarna "eindtijd" op eigen eindtijd zetten. 
 				//Op basis daarvan vrije momenten toevoegen aan de lijst met vrije uren (aantal minuten delen door 30 of 90)
 				$start = substr($startDateTime, 11, 5);		
@@ -186,7 +186,7 @@
 			printf("EDL: %s; ETL: %s;", $app_date_end,$endOpen);
 			if(strtotime($endOpen) > strtotime($previousEndTime)){
 				$errordate = date('d.m.Y h:i:s'); 
-				error_log($errordate."--"."createEerste - strtotime($endOpen) > strtotime($previousEndTime)\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");	
+				error_log($errordate."--"."createEerste - strtotime($endOpen) > strtotime($previousEndTime)\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");	
 				$timeDifferenceInMinutes = (strtotime($endOpen) - strtotime($previousEndTime))/60;
 				if(($timeDifferenceInMinutes/90) >= 1){ //afspraak 90 min
 					$noTime = false;
@@ -208,9 +208,33 @@
 		}
 		mysqli_close($link);
 	}
-	
+	function createEerste($results,$previousEndTime,$endOpen){
+		//Database functionality
+		$string = file_get_contents("/home/borahv1q/borah-secrets/pw.txt");
+		$string = str_replace(array("\r", "\n"), '', $string);
+		$link = mysqli_connect("localhost", "borahv1q", $string , "borahv1q_Agenda");
+		if (!$link) {
+			echo "Error: Unable to connect to MySQL." . PHP_EOL;
+			echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+			echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+			$errordate = date('d.m.Y h:i:s'); 
+			error_log($errordate."--"."Error: Unable to connect to MySQL." . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			error_log($errordate."--"."Debugging errno: " . mysqli_connect_errno() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			error_log($errordate."--"."Debugging error: " . mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+			exit;
+		}
+		$sql = "DELETE * FROM afspraken";
+		$errordate = date('d.m.Y h:i:s'); 
+		if (mysqli_query($link, $sql)) {
+			error_log($errordate."--"."OK: query".$sql."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+		} else {
+			error_log($errordate."--"."Error: query".$sql."--Message--". mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
+		}
+
+		mysqli_close($link);
+	}	
 	$errordate = date('d.m.Y h:i:s'); 
-	error_log($errordate."--"."Starting afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+	error_log($errordate."--"."Starting afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 	
 	// Get the API client and construct the service object.
 	$client = getClient();
@@ -226,7 +250,7 @@
 	$startOpen = "";
 	$endOpen = "";
 	
-	//Query the events for the next month
+	//Query the events for the next 3 month
 	$optParams = array(
 	  'orderBy' => 'startTime',
 	  'singleEvents' => true,
@@ -237,8 +261,10 @@
 	
 	if (empty($results->getItems())) {
 		$errordate = date('d.m.Y h:i:s'); 
-		error_log($errordate."--"."No upcoming events found, empty($results->getItems()).\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+		error_log($errordate."--"."No upcoming events found, empty($results->getItems()).\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 	} else {
+		//remove all database records
+		cleanDB();
 		foreach ($results->getItems() as $event) {
 			if($event->getSummary() == "Open"){
 				$open=true;
@@ -261,11 +287,11 @@
 			}
 			else{
 				$errordate = date('d.m.Y h:i:s'); 
-				error_log($errordate."--"."Geen afspraak met titel open.\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+				error_log($errordate."--"."Geen afspraak met titel open.\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 			}
 		}
 
     }
 	$errordate = date('d.m.Y h:i:s'); 
-	error_log($errordate."--"."End of afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspaken-naar-db.log");
+	error_log($errordate."--"."End of afspraken_naar_db script.\n", 3, "/home/borahv1q/logs/php-afspraken-naar-db.log");
 ?>
