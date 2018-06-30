@@ -244,6 +244,7 @@
 	
 	//today
 	$today = new DateTime(); // This object represents current date/time
+	$today->modify('+2 days');
 	$today->setTime( 0, 0, 0 ); // reset time part, to prevent partial comparison	
 	
 	$open = false;
