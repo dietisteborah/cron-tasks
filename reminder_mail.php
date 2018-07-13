@@ -60,14 +60,21 @@
 		 */
 		while($row = mysqli_fetch_assoc($result)) {
 			printf("%s;", $row["body"]);
-			/*try {
+			try {
 				// The message needs to be encoded in Base64URL
 				$mime = rtrim(strtr(base64_encode($row["body"]), '+/', '-_'), '=');
 				$msg = new Google_Service_Gmail_Message();
 				$msg->setRaw($mime);
 				$objSentMsg = $service->users_messages->send("me", $msg);
 
-				//print('Hartelijk dank voor het maken van een afspraak op '.$date.' om '.$time);
+				//remove reminder from db
+				$delete_sql = "DELETE FROM reminders where reminder_date =\"".$row["reminder_date"]. "\"";;
+				$errordate = date('d.m.Y h:i:s'); 
+				if (mysqli_query($link, $delete_sql)) {
+					error_log($errordate."--"."OK: query ".$delete_sql."\n", 3, "/home/borahv1q/logs/php-reminder_mail.log");
+				} else {
+					error_log($errordate."--"."Error: query".$delete_sql."--Message--". mysqli_connect_error() . PHP_EOL ."\n", 3, "/home/borahv1q/logs/php-reminder_mail.log");
+				}
 
 			} catch (Exception $e) {
 				$errordate = date('d.m.Y h:i:s'); 
