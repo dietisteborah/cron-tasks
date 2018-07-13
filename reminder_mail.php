@@ -26,7 +26,7 @@
 	}
 	//get all to be send reminders
 	error_log($errordate."--"."today_string: " . $today_string ."\n", 3, "/home/borahv1q/logs/php-reminder_mail.log");
-	$sql = "SELECT * FROM reminders where reminder_date <=\"".$today_string;
+	$sql = "SELECT * FROM reminders where reminder_date <=\"".$today_string. "\"";
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
 		// connect to google mail
