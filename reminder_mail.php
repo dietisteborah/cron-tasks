@@ -59,8 +59,8 @@
 		 * Get all data from query and send correct mail
 		 */
 		while($row = mysqli_fetch_assoc($result)) {
-			//printf("%s;", substr($row["startTime"], 0, 5));
-			try {
+			printf("%s;", $row["body"]);
+			/*try {
 				// The message needs to be encoded in Base64URL
 				$mime = rtrim(strtr(base64_encode($row["body"]), '+/', '-_'), '=');
 				$msg = new Google_Service_Gmail_Message();
@@ -72,7 +72,7 @@
 			} catch (Exception $e) {
 				$errordate = date('d.m.Y h:i:s'); 
 				error_log($errordate."--"."mail-issue:".$e->getMessage()."\n", 3, "/home/borahv1q/logs/php-reminder_mail.log");
-			}					
+			}	*/				
 		}
 	} else {
 		print "Geen afspraken beschikbaar op deze datum.\n";
