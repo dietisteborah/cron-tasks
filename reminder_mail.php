@@ -78,7 +78,7 @@
 			} catch (Exception $e) {
 				$errordate = date('d.m.Y h:i:s'); 
 				error_log($errordate."--"."mail-issue:".$e->getMessage()."\n", 3, "/home/borahv1q/logs/php-reminder_mail.log");
-			}	*/				
+			}					
 		}
 	} else {
 		print "Geen afspraken beschikbaar op deze datum.\n";
