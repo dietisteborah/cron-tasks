@@ -59,7 +59,6 @@
 		 * Get all data from query and send correct mail
 		 */
 		while($row = mysqli_fetch_assoc($result)) {
-			printf("%s;", $row["body"]);
 			try {
 				// The message needs to be encoded in Base64URL
 				$mime = rtrim(strtr(base64_encode($row["body"]), '+/', '-_'), '=');
