@@ -1,5 +1,5 @@
 <?php
-	require_once '/home/borahv1q/vendor/autoload.php';
+	//require_once '/home/borahv1q/vendor/autoload.php'; //used for google maps
 	putenv('GOOGLE_APPLICATION_CREDENTIALS=/home/borahv1q/borah-secrets/client_secret.json');
 	
 	$errordate = date('d.m.Y h:i:s'); 
