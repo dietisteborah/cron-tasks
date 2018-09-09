@@ -244,10 +244,10 @@
 				printf("SDL: %s; STL: %s;", $app_date,$start);
 				if(strtotime($start) > strtotime($previousEndTime)){
 					$timeDifferenceInMinutes = (strtotime($start) - strtotime($previousEndTime))/60;
-					if(($timeDifferenceInMinutes/30) >= 1){ //afspraak 45 min
+					if(($timeDifferenceInMinutes/45) >= 1){ //afspraak 45 min
 						$noTime = false;
 						$amountOfAppointments = $timeDifferenceInMinutes/30; //afspraak kan elke 30min geplaatst worden
-						for($i=0;$i<$amountOfAppointments-2;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
+						for($i=0;$i<$amountOfAppointments-1;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
 							$add = 30 + (30*$i);
 							$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
 							$db_endTime = $newStartTime + (45*60);
@@ -280,7 +280,7 @@
 				if(($timeDifferenceInMinutes/45) >= 1){ //afspraak 45 min
 					$noTime = false;
 					$amountOfAppointments = $timeDifferenceInMinutes/30; //afspraak kan elke 30min geplaatst worden
-					for($i=0;$i<$amountOfAppointments-2;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
+					for($i=0;$i<$amountOfAppointments-1;$i++){ //-2 om te zorgen dat er op tijd gestopt wordt met afspraken maken
 						$add = 30 + (30*$i);
 						$newStartTime = strtotime($previousEndTime) + (30*60*$i); 
 						$db_endTime = $newStartTime + (45*60);
